@@ -1,0 +1,78 @@
+plugins {
+    id 'java-library'
+    id 'maven-publish'
+    id 'signing'
+}
+
+group = 'page.pieters'
+version = '0.1.0'
+
+java {
+    sourceCompatibility = JavaVersion.VERSION_25
+    targetCompatibility = JavaVersion.VERSION_25
+    withSourcesJar()
+    withJavadocJar()
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    testImplementation 'org.junit.jupiter:junit-jupiter:5.10.2'
+    testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+}
+
+test {
+    useJUnitPlatform()
+}
+
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+            from components.java
+            pom {
+                name = 'Cenv'
+                description = 'A lightweight Java library for resolving configuration values from JVM system properties and OS environment variables through a single, consistent API.'
+                url = 'https://pieters.page'
+                licenses {
+                    license {
+                        name = 'Apache License, Version 2.0'
+                        url = 'https://www.apache.org/licenses/LICENSE-2.0'
+                    }
+                }
+                developers {
+                    developer {
+                        name = 'Pieter du Plessis'
+                        email = 'reachme@pieters.page'
+                        url = 'https://pieters.page'
+                    }
+                }
+                scm {
+                    connection = 'scm:git:git://github.com/pieterspage/cenv.git'
+                    developerConnection = 'scm:git:ssh://github.com/pieterspage/cenv.git'
+                    url = 'https://github.com/pieterspage/cenv'
+                }
+            }
+        }
+    }
+    repositories {
+        maven {
+            name = 'central'
+            url = 'https://central.sonatype.com/api/v1/publisher/upload'
+            credentials {
+                username = findProperty('centralUsername') ?: System.getenv('CENTRAL_USERNAME')
+                password = findProperty('centralPassword') ?: System.getenv('CENTRAL_PASSWORD')
+            }
+        }
+    }
+}
+
+signing {
+    def signingKey = findProperty('signingKey') ?: System.getenv('SIGNING_KEY')
+    def signingPassword = findProperty('signingPassword') ?: System.getenv('SIGNING_PASSWORD')
+    if (signingKey && signingPassword) {
+        useInMemoryPgpKeys(signingKey, signingPassword)
+        sign publishing.publications.mavenJava
+    }
+}
