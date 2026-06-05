@@ -68,6 +68,10 @@ publishing {
     }
 }
 
+tasks.register('publishToMavenSona') {
+    dependsOn 'publishMavenJavaPublicationToCentralRepository'
+}
+
 signing {
     def signingKey = findProperty('signingKey') ?: System.getenv('SIGNING_KEY')
     def signingPassword = findProperty('signingPassword') ?: System.getenv('SIGNING_PASSWORD')

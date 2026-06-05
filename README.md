@@ -86,6 +86,29 @@ Test reports are written to `build/reports/tests/test/index.html`.
 
 ---
 
+## Publishing to Maven Central
+
+Add the following to `~/.gradle/gradle.properties`:
+
+```properties
+centralUsername=<portal-token-username>
+centralPassword=<portal-token-password>
+signingKey=-----BEGIN PGP PRIVATE KEY BLOCK-----\n...\n-----END PGP PRIVATE KEY BLOCK-----
+signingPassword=<gpg-key-passphrase>
+```
+
+Then run:
+
+```bash
+./gradlew publishToMavenSona
+
+
+```
+
+Log in to [central.sonatype.com](https://central.sonatype.com), go to **Deployments**, and click **Release**.
+
+---
+
 ## License
 
 Apache License, Version 2.0 — see [LICENSE](LICENSE) for details.
