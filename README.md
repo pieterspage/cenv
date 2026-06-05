@@ -23,7 +23,7 @@ Published to Maven Central under `page.pieters:cenv`.
 
 ## Requirements
 
-- Java 25+
+- Java 11+
 - Gradle 8.14.4
 
 ## Installation
