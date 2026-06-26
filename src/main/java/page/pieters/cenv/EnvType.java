@@ -1,6 +1,6 @@
 package page.pieters.cenv;
 
-enum EnvType {
+public enum EnvType {
     NONE("None"),
     AWS_SECRET("AWS Secret");
 
