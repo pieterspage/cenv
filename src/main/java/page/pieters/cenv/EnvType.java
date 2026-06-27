@@ -1,10 +1,10 @@
 package page.pieters.cenv;
 
 public enum EnvType {
-    NONE("None"),
+    DEFAULT("Default"),
     AWS_SECRET("AWS Secret");
 
-    private String description;
+    private final String description;
 
     private EnvType(String description) {
         this.description = description;

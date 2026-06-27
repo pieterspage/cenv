@@ -2,7 +2,7 @@ package page.pieters.cenv;
 
 import java.util.HashMap;
 
-public class JParse {
+class JParse {
 
     public static HashMap<String, String> parseFlatJson(String jsonString) throws CenvJParseException {
 

@@ -2,10 +2,7 @@ package page.pieters.cenv;
 
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.*;
 
 class CenvTest {
 
@@ -23,6 +20,12 @@ class CenvTest {
         Cenv cenv = new Cenv("PATH");
         assertNotNull(cenv.getValue());
         assertFalse(cenv.getValue().isEmpty());
+    }
+
+    @Test
+    void returnsNullForNonExistentKey() {
+        Cenv cenv = new Cenv("CENV_TEST_NONEXISTENT_KEY");
+        assertNull(cenv.getValue());
     }
 
     @Test

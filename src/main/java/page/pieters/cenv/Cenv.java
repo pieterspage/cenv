@@ -14,7 +14,7 @@ public class Cenv {
     HashMap<String, String> subKeys;
 
     public Cenv(String key) {
-        this.envType = EnvType.NONE;
+        this.envType = EnvType.DEFAULT;
         this.key = key;
         this.value = getEnv(key);
     }
@@ -23,10 +23,12 @@ public class Cenv {
         this.envType = envType;
         this.key = key;
 
-        try {
-            this.subKeys = JParse.parseFlatJson(getEnv(key));
-        } catch (Exception e) {
-            LOGGER.log(Level.SEVERE, "Failed to to parse flat JSON string", e);
+        if (envType == EnvType.AWS_SECRET) {
+            try {
+                this.subKeys = JParse.parseFlatJson(getEnv(key));
+            } catch (Exception e) {
+                LOGGER.log(Level.SEVERE, "CENV: Failed to parse flat JSON string", e);
+            }
         }
     }
 
@@ -35,6 +37,11 @@ public class Cenv {
     }
 
     public String getSubKey(String subKey) {
+
+        if (envType == EnvType.DEFAULT) {
+            LOGGER.log(Level.SEVERE, "CENV: DEFAULT environment types cannot have sub keys");
+            return null;
+        }
         return subKeys.get(subKey);
     }
 
