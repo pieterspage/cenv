@@ -1,7 +1,12 @@
 # Cenv
 
-A lightweight Java library for resolving configuration values from JVM system properties and OS environment variables through a single, consistent API.
+A lightweight Java library for resolving configuration values from JVM system properties, OS environment variables, and AWS Secrets Manager through a single, consistent API.
 
+[![MvnRepository](https://badges.mvnrepository.com/badge/page.pieters/cenv/badge.svg?label=MvnRepository&selector=stable&color=green)](https://mvnrepository.com/artifact/page.pieters/cenv)
+
+---
+
+## Usage
 When you look up a key, Cenv first checks JVM system properties (`-Dkey=value`), then falls back to OS environment variables. Instead of writing this everywhere:
 
 ```java
@@ -10,11 +15,14 @@ if (value == null || value.isEmpty()) {
     value = System.getenv("MY_KEY");
 }
 ```
-
 You write:
-
 ```java
 String value = new Cenv("MY_KEY").getValue();
+```
+Or for AWS Secret Keys:
+```java
+Cenv cenv = new Cenv("MY_AWS_SECRET");
+String value = cenv.getSubKey("MY_KEY");
 ```
 
 This makes your application config portable across local development, CI pipelines, and containerised environments where config may be injected as either a JVM flag or an environment variable.
@@ -101,7 +109,7 @@ Then run:
 
 ```bash
 ./gradlew publishToMavenSona
-
+./gradlew publishAllPublicationsToCentralPortal
 
 ```
 
